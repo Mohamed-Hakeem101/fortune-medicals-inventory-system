@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Monthly Summary - {{ month }}/{{ year }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2 { margin-bottom: 10px; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f4f4f4; }
+        .total { font-weight: bold; background: #fafafa; }
+        form { margin-bottom: 20px; }
+        select { padding: 5px; margin-right: 5px; }
+        button { padding: 5px 10px; }
+    </style>
+</head>
+<body>
+    <h1>Monthly Summary - {{ month }}/{{ year }}</h1>
+
+    <form method="get">
+        <p>Month</p>
+        <select id="month" name="month">
+            {% for m in month_range %}
+            <option value="{{ m }}" {% if m == month %}selected{% endif %}>{{ m }}</option>
+            {% endfor %}
+        </select>
+
+        <p>Year</p>
+        <select id="year" name="year">
+            {% for y in year_range %}
+            <option value="{{ y }}" {% if y == year %}selected{% endif %}>{{ y }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Show</button>
+    </form>
+
+    <h2>Bills</h2>
+    {% if bills %}
+        <table>
+            <tr>
+                <th>Bill ID</th>
+                <th>Created By</th>
+                <th>Supplier</th>
+                <th>Total</th>
+            </tr>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.id }}</td>
+                <td>{{ bill.created_by|default:"-" }}</td>
+                <td>{{ bill.supplier.name }}</td>
+                <td>{{ bill.total }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="total">
+                <td colspan="3">Bills Total</td>
+                <td>{{ bills_total }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <p>No bills found for this month.</p>
+    {% endif %}
+
+    <h2>Expenses</h2>
+    {% if expenses %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Amount</th>
+            </tr>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.name }}</td>
+                <td>{{ expense.category }}</td>
+                <td>{{ expense.amount }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="total">
+                <td colspan="2">Expenses Total</td>
+                <td>{{ expenses_total }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <p>No expenses found for this month.</p>
+    {% endif %}
+</body>
+</html>

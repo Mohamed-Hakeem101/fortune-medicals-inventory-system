@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{ date }} Summary</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        h1, h2 { margin-bottom: 10px; }
+        table { border-collapse: collapse; width: 100%; margin-bottom: 20px; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background: #f4f4f4; }
+        .total { font-weight: bold; background: #fafafa; }
+        form { margin-bottom: 20px; }
+        input[type="date"] { padding: 5px; }
+        button { padding: 5px 10px; }
+        ul { margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <h1><b>Fortune Medicals</b> Dashboard - Welcome, {{ user.username }}</h1>
+
+    <form method="get">
+        <label for="date">Pick a date:</label>
+        <input type="date" id="date" name="date" value="{{ picked_date }}">
+        <button type="submit">Show</button>
+    </form>
+
+    <ul>
+        <li><a href="{% url 'today_summary' %}">Today's Summary</a></li>
+    </ul>
+
+    <h2>Summary for {{ date }}</h2>
+
+    <h2>Bills</h2>
+    {% if bills %}
+        <table>
+            <tr>
+                <th>Bill ID</th>
+                <th>Created By</th>
+                <th>Supplier</th>
+                <th>Total</th>
+            </tr>
+            {% for bill in bills %}
+            <tr>
+                <td>{{ bill.id }}</td>
+                <td>{{ bill.created_by|default:"-" }}</td>
+                <td>{{ bill.supplier.name }}</td>
+                <td>{{ bill.total }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="total">
+                <td colspan="3">Bills Total</td>
+                <td>{{ bills_total }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <p>No bills found for this date.</p>
+    {% endif %}
+
+    <h2>Expenses</h2>
+    {% if expenses %}
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Category</th>
+                <th>Amount</th>
+            </tr>
+            {% for expense in expenses %}
+            <tr>
+                <td>{{ expense.name }}</td>
+                <td>{{ expense.category }}</td>
+                <td>{{ expense.amount }}</td>
+            </tr>
+            {% endfor %}
+            <tr class="total">
+                <td colspan="2">Expenses Total</td>
+                <td>{{ expenses_total }}</td>
+            </tr>
+        </table>
+    {% else %}
+        <p>No expenses found for this date.</p>
+    {% endif %}
+</body>
+</html>
