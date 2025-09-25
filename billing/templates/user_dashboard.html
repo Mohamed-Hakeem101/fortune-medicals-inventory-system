@@ -25,9 +25,8 @@
         <button type="submit">Show</button>
     </form>
 
-    <ul>
-        <li><a href="{% url 'today_summary' %}">Today's Summary</a></li>
-    </ul>
+    <a href="{% url 'today_summary' %}">Today's Summary</a>
+    <a href="{% url 'monthly_summary' %}">Monthly Summary</a>
 
     <h2>Summary for {{ date }}</h2>
 
