@@ -44,6 +44,8 @@
                 <th>Bill ID</th>
                 <th>Created By</th>
                 <th>Supplier</th>
+                <th>Payment Type</th>
+                <th>Cheque Number</th>
                 <th>Total</th>
             </tr>
             {% for bill in bills %}
@@ -51,11 +53,13 @@
                 <td>{{ bill.id }}</td>
                 <td>{{ bill.created_by|default:"-" }}</td>
                 <td>{{ bill.supplier.name }}</td>
+                <td>{{ bill.payment_type }}</td>
+                <td>{{ bill.cheque_number }}</td>
                 <td>{{ bill.total }}</td>
             </tr>
             {% endfor %}
             <tr class="total">
-                <td colspan="3">Bills Total</td>
+                <td colspan="5">Bills Total</td>
                 <td>{{ bills_total }}</td>
             </tr>
         </table>
@@ -67,12 +71,14 @@
     {% if expenses %}
         <table>
             <tr>
+                <th>Date</th>
                 <th>Name</th>
                 <th>Category</th>
                 <th>Amount</th>
             </tr>
             {% for expense in expenses %}
             <tr>
+                <td>{{ expense.created_at }}</td>
                 <td>{{ expense.name }}</td>
                 <td>{{ expense.category }}</td>
                 <td>{{ expense.amount }}</td>
