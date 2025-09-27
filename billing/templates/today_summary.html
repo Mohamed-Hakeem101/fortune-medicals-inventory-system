@@ -22,6 +22,8 @@
                 <th>Bill ID</th>
                 <th>Created By</th>
                 <th>Supplier</th>
+                <th>Payment Type</th>
+                <th>Cheque Number</th>
                 <th>Total</th>
             </tr>
             {% for bill in bills %}
@@ -29,11 +31,13 @@
                 <td>{{ bill.id }}</td>
                 <td>{{ bill.created_by }}</td>
                 <td>{{ bill.supplier.name }}</td>
+                <td>{{ bill.payment_type }}</td>
+                <td>{{ bill.cheque_number }}</td>
                 <td>{{ bill.total }}</td>
             </tr>
             {% endfor %}
             <tr class="total">
-                <td colspan="3">Bills Total</td>
+                <td colspan="5">Bills Total</td>
                 <td>{{ bills_total }}</td>
             </tr>
         </table>
