@@ -23,7 +23,9 @@ class Item(models.Model):
 class Bill(models.Model):
     PAYMENT_CHOICES = [
         ('CASH', 'Cash'),
-        ('CREDIT', 'Credit'),
+        ('CASH_CHEQUE', 'Cash Cheque'),
+        ('ONLINE', 'Online'),
+        ('NO_PAY', 'No Pay'),
     ]
     supplier = models.ForeignKey(Supplier, on_delete=models.CASCADE)
     created_at = models.DateTimeField(blank=True, null=True, default=None)
@@ -31,6 +33,7 @@ class Bill(models.Model):
 
     created_by = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     payment_type = models.CharField(max_length=10, choices=PAYMENT_CHOICES, default='CASH')
+    cheque_number = models.CharField(max_length=200, default=' - ')
     updated_at = models.DateTimeField(auto_now=True)
 
     @property
